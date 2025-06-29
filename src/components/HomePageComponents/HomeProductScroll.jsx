@@ -20,21 +20,21 @@ const products = [
     },
     {
         label: "Cashback Offer",
-        title: "Mahamana Personal Loan",
+        title: "Mahamaya Personal Loan",
         desc: "Wide range of personal loans from trusted banks & NBFCs.",
         callToAction: "Check Eligibility",
         icon: <FaMoneyBillWave className="text-3xl text-green-600" />,
     },
     {
         label: "Cashback Offer",
-        title: "Mahamana Business Loan",
+        title: "Mahamaya Business Loan",
         desc: "Boost your business with low-interest loan options.",
         callToAction: "Check Eligibility",
         icon: <FaBuilding className="text-3xl text-gray-600" />,
     },
     {
         label: "Best Offer",
-        title: "Mahamana Home Loan",
+        title: "Mahamaya Home Loan",
         desc: "Get home loans with the lowest interest rates.",
         callToAction: "Check Eligibility",
         icon: <FaHome className="text-3xl text-pink-500" />,
@@ -58,7 +58,7 @@ const products = [
         icon: <FaCar className="text-3xl text-blue-900" />,
     },
     {
-        title: "Mahamana Money",
+        title: "Mahamaya Money",
         desc: "Track and save more with smart financial insights.",
         callToAction: "Track Now",
         icon: <FaWallet className="text-3xl text-black" />,
@@ -117,7 +117,7 @@ const HomeProductScroll = () => {
                 Popular Products
             </motion.h2>
 
-            <div className="overflow-x-auto pb-4">
+            <div className="overflow-y-hidden pb-4 overflow-x-auto scrollbar-custom">
                 <div className="flex gap-4 min-w-max">
                     {products.map((item, i) => (
                     <motion.div

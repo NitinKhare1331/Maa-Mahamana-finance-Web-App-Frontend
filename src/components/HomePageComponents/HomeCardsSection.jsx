@@ -32,7 +32,7 @@ const cards = [
         subtitle: (
             <>
                 Comprehensive plans <br />
-                starting at just ₹499/year
+                starting at just ₹2499/year
             </>
         ),
         btnText: "Insure Now",

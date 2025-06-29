@@ -37,9 +37,12 @@ const GetACallModal = ({ showForm, onClose, formData, setFormData }) => {
           email: formData.email,
           mobile: formData.mobile,
         });
+
         setFormData({ name: "", email: "", mobile: "" });
         toast.success("Query submitted successfully!");
+        localStorage.setItem("showThankYou", "true");
         onClose();
+        
       } catch (error) {
         console.error("Query error:", error);
         toast.error("Something went wrong. Please try again.");

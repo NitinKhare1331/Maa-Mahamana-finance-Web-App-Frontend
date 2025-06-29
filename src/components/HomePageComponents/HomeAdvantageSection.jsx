@@ -40,7 +40,7 @@ const cardVariants = {
 const HomeAdvantageSection = () => {
 
     return (
-        <section className="px-6 py-20 bg-white text-gray-800">
+        <section className="px-6 py-20 text-gray-800">
             <div className="max-w-[1140px] mx-auto">
                 <h2 className="text-3xl font-bold mb-4 border-l-4 border-indigo-600 pl-3">
                 Why Choose Us?

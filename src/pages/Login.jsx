@@ -69,8 +69,6 @@ const Login = () => {
         }
     };
 
-
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-200 via-blue-100 to-purple-300 flex items-center justify-center px-4">
             <div className="w-full max-w-md p-6 space-y-10">

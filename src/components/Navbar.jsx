@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import GetACallModal from "./GetACallModal.jsx";
 import { useNavigate } from "react-router-dom";
-import Logo from "../assets/logo.png"
+import Logo from "../assets/logo.png";
 
 const Navbar = () => {
+
     const [menuOpen, setMenuOpen] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [showThankYou, setShowThankYou] = useState(false);
@@ -16,12 +17,21 @@ const Navbar = () => {
     });
 
     const navigate = useNavigate();
+
     const [clicked, setClicked] = useState(false);
+
+    useEffect(() => {
+            if (localStorage.getItem("showThankYou") === "true") {
+                setShowThankYou(true);
+                localStorage.removeItem("showThankYou");
+                setTimeout(() => setShowThankYou(false), 3000);
+            }
+    }, [showForm]);
 
     const handleLoginClick = () => {
         setClicked(true);
         setTimeout(() => {
-            navigate("/signup");
+            navigate("/login");
         }, 400);
     };
 
@@ -39,7 +49,11 @@ const Navbar = () => {
                     <img
                         src={Logo}
                         alt="Maa Mahamana Finance Logo"
-                        className="h-10 w-auto object-contain"
+                        className="h-10 w-auto object-contain cursor-pointer"
+                        onClick={() => {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            navigate('/', { replace: true });
+                        }}
                     />
 
                     {/* Desktop Menu */}
@@ -63,7 +77,7 @@ const Navbar = () => {
                         </motion.button>
                     </div>
 
-                    {/* Mobile Menu Toggle Button */}
+                    {/* Mobile Menu Button */}
                     <motion.button
                         onClick={() => setMenuOpen(!menuOpen)}
                         className="md:hidden"

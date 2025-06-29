@@ -9,13 +9,15 @@ import FaqAccordion from "../components/FaqAccordion.jsx"
 const HomePage = () => {
     return (
         <>
-            <HomeNavbar />
-            <HomePageHeroSection />
-            <HomeProductScroll />
-            <HomeCardSection />
-            <HomeAdvantageSection />
-            <FaqAccordion />
-            <Footer />
+            <div className="bg-gradient-to-br from-indigo-200 via-blue-100 to-purple-300">
+                <HomeNavbar />
+                <HomePageHeroSection />
+                <HomeProductScroll />
+                <HomeCardSection />
+                <HomeAdvantageSection />
+                <FaqAccordion />
+                <Footer />
+            </div>
         </>
     )
 }

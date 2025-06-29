@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import GetACallModal from "../GetACallModal.jsx";
-import Logo from "../../assets/logo.png"
+import Logo from "../../assets/logo.png";
+import { useNavigate } from "react-router-dom";
+import ProfilePanel from "./ProfilePanel.jsx";
 
 const HomeNavbar = () => {
+
+    const navigate = useNavigate();
+    const [showProfilePanel, setShowProfilePanel] = useState(false);
+
     const [menuOpen, setMenuOpen] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [showThankYou, setShowThankYou] = useState(false);
@@ -14,7 +20,13 @@ const HomeNavbar = () => {
         mobile: "",
     });
 
-    const [clicked, setClicked] = useState(false);
+    useEffect(() => {
+        if (localStorage.getItem("showThankYou") === "true") {
+            setShowThankYou(true);
+            localStorage.removeItem("showThankYou");
+            setTimeout(() => setShowThankYou(false), 3000);
+        }
+    }, [showForm]);
 
     const handleSubmit = () => {
         setShowForm(false);
@@ -26,17 +38,19 @@ const HomeNavbar = () => {
     return (
         <>
             <nav className="bg-white shadow-md fixed top-0 w-full z-50">
-                <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
+                <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3 cursor-pointer">
                     <img
                         src={Logo}
                         alt="Maa Mahamana Finance Logo"
                         className="h-10 w-auto object-contain"
+                        onClick={() => {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            navigate('/home', { replace: true });
+                        }}
                     />
 
                     {/* Desktop Menu */}
-
                     <div className="hidden md:flex items-center gap-4 ml-auto">
-
                         {/* Renew Policy Dropdown */}
                         <div className="relative group">
                             <motion.button
@@ -45,7 +59,7 @@ const HomeNavbar = () => {
                             >
                             Our Products
                             </motion.button>
-                            <div className="absolute left-0 top-full mt-2 w-44 bg-white border rounded-md shadow-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-300 z-50">
+                            <div className="absolute left-0 top-full mt-2 w-44 bg-white border rounded-md shadow-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-400 ease-in-out delay-100 z-10">
                                 <ul className="text-sm text-gray-700 py-2">
                                     <li className="px-4 py-2 hover:bg-indigo-50 cursor-pointer">Credit Card</li>
                                     <li className="px-4 py-2 hover:bg-indigo-50 cursor-pointer">Personal Loan</li>
@@ -56,8 +70,6 @@ const HomeNavbar = () => {
                                 </ul>
                             </div>
                         </div>
-
-
                         {/* Renew Policy Dropdown */}
                         <div className="relative group">
                             <motion.button
@@ -66,7 +78,7 @@ const HomeNavbar = () => {
                             >
                             Renew Policy
                             </motion.button>
-                            <div className="absolute left-0 top-full mt-2 w-52 bg-white border rounded-md shadow-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-300 z-50">
+                            <div className="absolute left-0 top-full mt-2 w-52 bg-white border rounded-md shadow-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-400 ease-in-out delay-100 z-10">
                                 <ul className="text-sm text-gray-700 py-2">
                                     <li className="px-4 py-2 hover:bg-indigo-50 cursor-pointer">Term Life Renewal</li>
                                     <li className="px-4 py-2 hover:bg-indigo-50 cursor-pointer">Investment Renewal</li>
@@ -86,7 +98,7 @@ const HomeNavbar = () => {
                             >
                             Claim
                             </motion.button>
-                            <div className="absolute left-0 top-full mt-2 w-40 bg-white border rounded-md shadow-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-300 z-50">
+                            <div className="absolute left-0 top-full mt-2 w-40 bg-white border rounded-md shadow-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-400 ease-in-out delay-100 z-10">
                                 <ul className="text-sm text-gray-700 py-2">
                                     <li className="px-4 py-2 hover:bg-indigo-50 cursor-pointer">File a new claim</li>
                                     <li className="px-4 py-2 hover:bg-indigo-50 cursor-pointer">Claim already filed</li>
@@ -96,6 +108,7 @@ const HomeNavbar = () => {
                             </div>
                         </div>
 
+
                         {/* Supprt Dropdown */}
                         <div className="relative group">
                             <motion.button
@@ -104,7 +117,7 @@ const HomeNavbar = () => {
                             >
                             Support
                             </motion.button>
-                            <div className="absolute left-0 top-full mt-2 w-60 bg-white border rounded-md shadow-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity duration-300 z-50">
+                            <div className="absolute left-0 top-full mt-2 w-60 bg-white border rounded-md shadow-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-400 ease-in-out delay-100 z-10">
                                 <ul className="text-sm text-gray-700 py-2">
                                     <li className="px-4 py-2 hover:bg-indigo-50 cursor-pointer">Contact us at <div><b>+91 XXXXXXXXXX</b></div></li>
                                     <li className="px-4 py-2 hover:bg-indigo-50 cursor-pointer">OR</li>
@@ -114,6 +127,7 @@ const HomeNavbar = () => {
                         </div>
 
                         {/* Get a Call */}
+
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             onClick={() => setShowForm(true)}
@@ -125,16 +139,16 @@ const HomeNavbar = () => {
                         {/* Account */}
                         <motion.button
                             whileHover={{ scale: 1.05 }}
-                            animate={clicked ? { scale: 0.9, opacity: 0 } : {}}
                             transition={{ duration: 0.4 }}
                             className="border bg-indigo-600 text-white px-4 py-1 rounded-full text-sm"
+                            onClick={() => setShowProfilePanel(true)}
                         >
                             Account
                         </motion.button>
                         </div>
 
 
-                    {/* Mobile Menu Toggle Button */}
+                    {/* Mobile Menu Button */}
                     <motion.button
                         onClick={() => setMenuOpen(!menuOpen)}
                         className="md:hidden"
@@ -149,8 +163,7 @@ const HomeNavbar = () => {
                 {/* Mobile Menu */}
                 {menuOpen && (
                     <div className="md:hidden px-4 pb-4 flex flex-col gap-2">
-
-                        {/* Our Products */}
+                        {/* Products */}
                         <button
                         className="border border-indigo-600 text-indigo-600 px-4 py-1 rounded-full text-sm"
                         >
@@ -192,12 +205,23 @@ const HomeNavbar = () => {
                         {/* Account */}
                         <button
                         className="bg-indigo-600 text-white px-4 py-1 rounded-full text-sm"
+                        onClick={() => {
+                            setMenuOpen(false);
+                            setShowProfilePanel(true);
+                        }}
                         >
                         Account
                         </button>
                     </div>
                 )}
-
+                {showProfilePanel && (
+                    <div className="fixed inset-0 z-40 bg-opacity-10 backdrop-blur-sm">
+                        <ProfilePanel
+                            isOpen={showProfilePanel}
+                            onClose={() => setShowProfilePanel(false)}
+                        />
+                    </div>
+                )}
             </nav>
 
             {/* Call Modal */}

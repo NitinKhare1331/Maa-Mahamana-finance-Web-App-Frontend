@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import GetACallModal from "./GetACallModal.jsx";
 import { useNavigate } from "react-router-dom";
+import Logo from "../assets/logo.png"
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -35,7 +36,11 @@ const Navbar = () => {
         <>
             <nav className="bg-white shadow-md fixed top-0 w-full z-50">
                 <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3">
-                    <div className="text-xl font-bold text-indigo-600">Maa Mahamana Finance</div>
+                    <img
+                        src={Logo}
+                        alt="Maa Mahamana Finance Logo"
+                        className="h-10 w-auto object-contain"
+                    />
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center gap-4">

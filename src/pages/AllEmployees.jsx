@@ -3,12 +3,17 @@ import { getAllEmployees } from "../api/getAllEmployees.js";
 import { deleteEmployeeById } from "../api/deleteEmployee.js";
 import { updateEmployeeById } from "../api/updateEmployee.js";
 import { FaUserTie, FaTrashAlt, FaEdit, FaSave, FaTimes } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
+import CreateEmployeeModal from "../components/AdminPageComponents/createEmployeeModal.jsx";
+
 
 const Allemployees = () => {
     const [employees, setEmployees] = useState([]);
     const [editId, setEditId] = useState(null);
     const [editUsername, setEditUsername] = useState("");
     const [editEmail, setEditEmail] = useState("");
+    const [showCreateModal, setShowCreateModal] = useState(false);
+
 
     const fetchEmployees = async () => {
         try {
@@ -135,6 +140,21 @@ const Allemployees = () => {
                     ))}
                 </div>
             </div>
+            {showCreateModal && (
+                <CreateEmployeeModal
+                    onClose={() => setShowCreateModal(false)}
+                    onSuccess={fetchEmployees}
+                />
+            )}
+
+            <button
+                onClick={() => setShowCreateModal(true)}
+                className="fixed bottom-6 right-6 bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 transition"
+                title="Add Employee"
+            >
+                <FaPlus />
+            </button>
+
         </div>
     );
 };

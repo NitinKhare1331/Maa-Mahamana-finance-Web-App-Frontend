@@ -1,12 +1,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const ProfilePanel = ({ isOpen, onClose }) => {
+
+    const { logout } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.clear();
+        logout();
         onClose();
         navigate("/login");
     };

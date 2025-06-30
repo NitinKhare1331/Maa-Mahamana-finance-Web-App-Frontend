@@ -10,6 +10,8 @@ const Login = () => {
 
     const navigate = useNavigate();
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const { login } = useAuth();
 
     const [formData, setFormData] = useState({
@@ -21,53 +23,59 @@ const Login = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+
     const handleSubmit = async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        if (!formData.email || !formData.password) {
-            toast.error("All fields are required");
-            return;
-        }
+    if (!formData.email || !formData.password) {
+        toast.error("All fields are required");
+        return;
+    }
 
-        if (formData.password.length < 6) {
-            toast.error("Password must be at least 6 characters");
-            return;
-        }
+    if (formData.password.length < 6) {
+        toast.error("Password must be at least 6 characters");
+        return;
+    }
 
-        try {
-            const response = await loginUser({
+    setIsSubmitting(true);
+
+    try {
+        const response = await loginUser({
             email: formData.email,
             password: formData.password,
-            });
+        });
 
-            if (!response.success) {
-                toast.error(response.message || "Login failed");
+        if (!response.success) {
+            toast.error(response.message || "Login failed");
+            setIsSubmitting(false);
             return;
-            }
-
-            const { token, role, email } = response.data;
-
-            login({email, role});
-
-            localStorage.setItem("token", token);
-            localStorage.setItem("user", JSON.stringify({ email, role }));
-
-            toast.success("Logged in successfully!");
-            setFormData({ email: "", password: "" });
-
-            if (role === "admin") {
-            navigate("/adminDashboard");
-            } else if (email.endsWith("@employee.com") || role === "employee") {
-            navigate("/employeeDashboard");
-            } else {
-            navigate("/home");
-            }
-
-        } catch (error) {
-            toast.error("Login failed. Try again.");
-            console.error("Login error:", error);
         }
-    };
+
+        const { token, role, email } = response.data;
+
+        login({ email, role, token });
+
+        toast.success("Logged in successfully!");
+        setFormData({ email: "", password: "" });
+
+
+
+        if (role === "admin") {
+            navigate("/adminDashboard");
+        } else if (email.endsWith("@employee.com") || role === "employee") {
+            navigate("/employeeDashboard");
+        } else {
+            navigate("/home");
+        }
+
+
+    } catch (error) {
+        toast.error("Login failed. Try again.");
+        console.error("Login error:", error);
+        setIsSubmitting(false);
+    }
+};
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-200 via-blue-100 to-purple-300 flex items-center justify-center px-4">
@@ -94,10 +102,13 @@ const Login = () => {
 
                 <button
                     type="submit"
-                    className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition text-sm"
+                    disabled={isSubmitting}
+                    className={`w-full py-2 rounded text-sm transition text-white ${isSubmitting ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'}`}
                 >
-                    Login
+                    {isSubmitting ? 'Logging in...' : 'Login'}
                 </button>
+
+
                 </form>
 
                 <p className="text-sm text-center text-gray-600">
